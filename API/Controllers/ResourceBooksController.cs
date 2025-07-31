@@ -11,8 +11,8 @@ using WebApplication2.Infrastructure.Persistence;
 
 namespace WebApplication2.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ResourceBooksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -41,18 +41,59 @@ namespace WebApplication2.Controllers
             return Ok(resourceBooks);
         }
 
+        // Optional: Add GET by id for CreatedAtAction reference
         [HttpGet("{id}")]
-        public async Task<ActionResult<ResourceBook>> GetResourceBookById(int id)
+        public async Task<ActionResult<ResourceBook>> GetResourceBook(int id)
         {
             var resourceBook = await _context.ResourceBooks
-                .Include(gr => gr.Resource)  // Include related Books
-                .FirstOrDefaultAsync(gr => gr.Id == id);
+                .Include(rb => rb.Resource)
+                .FirstOrDefaultAsync(rb => rb.Id == id);
 
             if (resourceBook == null)
             {
                 return NotFound();
             }
-            return Ok(resourceBook);
+
+            return resourceBook;
+        }
+
+        /// <summary>
+        /// //declare a method of type async Task<IActionResult> called CreateCar 
+        /// that reads the car parameter from the body of the HTTP request. [FromBody] attribute can 
+        /// be omitted if there is only one class parameter
+        /// </summary>
+        /// <param name="car"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> CreateResourceBook([FromBody] CreateResourceBookDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var resource = new Resource
+            {
+                Title = dto.Title,
+                ResourceTypeId = dto.ResourceTypeId,
+                ResourceTopicId = dto.ResourceTopicId
+            };
+            // Add Resource to context to generate ResourceId
+            _context.Resources.Add(resource);
+            await _context.SaveChangesAsync();
+
+            // Create ResourceBook entity with FK
+            var resourceBook = new ResourceBook
+            {
+                Author = dto.Author,
+                Pages = dto.Pages,
+                Cost = dto.Cost,
+                PublishDate = dto.PublishDate,
+                ResourceId = resource.ResourceId
+            };
+
+            _context.ResourceBooks.Add(resourceBook);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetResourceBook), new { id = resourceBook.Id }, resourceBook);
         }
     }
 }

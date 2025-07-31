@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Commands\" />
-    <Folder Include="Application\DTOs\" />
     <Folder Include="Application\ApplicationEvents\" />
     <Folder Include="Application\ApplicationServices\" />
     <Folder Include="Application\Handlers\" />
