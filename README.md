@@ -1,5 +1,5 @@
 # WebApplication2
-An ASP.NET Core Web API built with Clean Architecture principles. This project demonstrates a modular, testable, and maintainable backend solution following best practices for modern .NET development.
+An ASP.NET Core Web API built with Clean Architecture principles. This project designed to demonstrates a modular, testable, and maintainable backend solution following best practices for modern .NET development.
 
 ---
 
