@@ -10,10 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 //accomodates the move of appsettings.json that holds connectionstring info from root to the Infrastructure/Configurations folder for Clean Architecture adherance.
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
-       .AddJsonFile("Infrastructure/Configurations/appsettings.json", optional: false, reloadOnChange: true);
+       .AddJsonFile("Infrastructure/Configurations/appsettings.Development.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 
 
 builder.Services.AddEndpointsApiExplorer();
