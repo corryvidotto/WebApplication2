@@ -58,11 +58,11 @@ namespace WebApplication2.Controllers
         }
 
         /// <summary>
-        /// //declare a method of type async Task<IActionResult> called CreateCar 
-        /// that reads the car parameter from the body of the HTTP request. [FromBody] attribute can 
+        /// //declare a method of type async Task<IActionResult> called CreateResourceBookDTO dto
+        /// that reads the ResourceBook parameter from the body of the HTTP request. [FromBody] attribute can 
         /// be omitted if there is only one class parameter
         /// </summary>
-        /// <param name="car"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateResourceBook([FromBody] CreateResourceBookDTO dto)
