@@ -6,7 +6,7 @@ An ASP.NET Core Web (RESTful) API built with Clean Architecture principles. This
 ## 📐 Architecture Overview
 
 This project uses **Clean Architecture**, separating concerns into distinct layers:
-Basically -
+Basically:
 - **Domain**: Core business logic and domain entities.
 - **Application**: Use cases, interfaces, and DTOs.
 - **Infrastructure**: External dependencies like database, file system, APIs.
