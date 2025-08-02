@@ -11,4 +11,4 @@ Basically:
 - **Application**: Use cases, interfaces, and DTOs.
 - **Infrastructure**: External dependencies like database, file system, APIs.
 - **Presentation (Web API)**: HTTP layer for exposing the API.
-- **React** client to consume the REST API 
+- **React** client 
