@@ -6,14 +6,18 @@ namespace WebApplication2.Domain.Entities
 {
     public class ResourceBook
     {
-
         private decimal _totPages;
         private readonly decimal _readPages;
 
         public int Id { get; set; }
-        
         public int ResourceId { get; set; }
+        public Resource? Resource { get; set; }
+        [MaxLength(50)]
+        public string? Author { get; set; }
+        public int? Pages { get; set; }
+        public double? Cost { get; set; }
 
+        public DateOnly? PublishDate { get; set; }
         /// <summary>
         /// Default Constructor is necessary to create Initial Migration
         /// </summary>
@@ -21,16 +25,6 @@ namespace WebApplication2.Domain.Entities
         {
 
         }
-
-        public Resource? Resource { get; set; }
-
-        [MaxLength(50)]
-        public string? Author { get; set; }
-        public int? Pages { get; set; }
-        public double? Cost { get; set; }
-
-        public DateOnly? PublishDate { get; set; }
-
 
         public ResourceBook(int TotalPages, int ReadPages)//Constructor 1: integer parameters
         {
@@ -44,7 +38,6 @@ namespace WebApplication2.Domain.Entities
             _totPages = totPages;
             _readPages = readPages;
             CalcPercentageRead(_totPages, readPages);
-
         }
 
         public int CalcRemainingPages(int _totPages, int _readPages)
