@@ -14,33 +14,33 @@ namespace WebApplication2.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<ResourceBook>> GetAllBooksAsync()
+        public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
-            return await _context.ResourceBooks.ToListAsync();
+            return await _context.Books.ToListAsync();
         }
 
         //public async Task<ResourceBook> GetBookAsync(int Id)
         //{
-        //    return await _context.ResourceBooks
+        //    return await _context.Books
         //                         .FirstOrDefaultAsync(b => b.Id == Id);
         //}
 
-        public async Task<List<ResourceBook>> GetBooksByUserAsync(int userId)
+        public async Task<List<Book>> GetBooksByUserAsync(int userId)
         {
-            return await _context.ResourceBooks
+            return await _context.Books
                                  .Where(b => b.Id == userId)
                                  .ToListAsync();
         }
 
-        public async Task UpdateBookAsync(ResourceBook ResourceBook)
+        public async Task UpdateBookAsync(Book ResourceBook)
         {
-            _context.ResourceBooks.Update(ResourceBook);
+            _context.Books.Update(ResourceBook);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddBookAsync(ResourceBook book)
+        public async Task AddBookAsync(Book book)
         {
-            _context.ResourceBooks.Add(book);
+            _context.Books.Add(book);
             await _context.SaveChangesAsync();
         }
 

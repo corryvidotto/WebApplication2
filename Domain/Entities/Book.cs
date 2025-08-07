@@ -4,7 +4,7 @@
 namespace WebApplication2.Domain.Entities
 
 {
-    public class ResourceBook
+    public class Book
     {
         private decimal _totPages;
         private readonly decimal _readPages;
@@ -21,19 +21,19 @@ namespace WebApplication2.Domain.Entities
         /// <summary>
         /// Default Constructor is necessary to create Initial Migration
         /// </summary>
-        public ResourceBook()
+        public Book()
         {
 
         }
 
-        public ResourceBook(int TotalPages, int ReadPages)//Constructor 1: integer parameters
+        public Book(int TotalPages, int ReadPages)//Constructor 1: integer parameters
         {
             _totPages = TotalPages;
             _readPages = ReadPages;
             CalcRemainingPages(TotalPages, ReadPages);
         }
 
-        public ResourceBook(decimal totPages, decimal readPages)//Constructor 2: decimal parameters
+        public Book(decimal totPages, decimal readPages)//Constructor 2: decimal parameters
         {
             _totPages = totPages;
             _readPages = readPages;

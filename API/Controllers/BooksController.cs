@@ -13,22 +13,22 @@ namespace WebApplication2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ResourceBooksController : ControllerBase
+    public class BooksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ResourceBooksController(ApplicationDbContext context)
+        public BooksController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/resourcebooks plus data from the related table Resource
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResourceBook>>> GetAllBooksAsync()
+        public async Task<ActionResult<IEnumerable<Book>>> GetAllBooksAsync()
         {
-            var resourceBooks = await _context.ResourceBooks
-            .Include(rb => rb.Resource) //when returning rb (ResourceBooks, also retrieve the related (FK) Resource entity for each ResourceBook
-            .Select(rb => new ResourceBookDTO
+            var resourceBooks = await _context.Books
+            .Include(rb => rb.Resource) //when returning rb (Books, also retrieve the related (FK) Resource entity for each ResourceBook
+            .Select(rb => new BookDTO
             {
                 Author = rb.Author,
                 Resource = new ResourceDTO
@@ -43,9 +43,9 @@ namespace WebApplication2.Controllers
 
         // Optional: Add GET by id for CreatedAtAction reference
         [HttpGet("{id}")]
-        public async Task<ActionResult<ResourceBook>> GetResourceBook(int id)
+        public async Task<ActionResult<Book>> GetResourceBook(int id)
         {
-            var resourceBook = await _context.ResourceBooks
+            var resourceBook = await _context.Books
                 .Include(rb => rb.Resource)
                 .FirstOrDefaultAsync(rb => rb.Id == id);
 
@@ -81,7 +81,7 @@ namespace WebApplication2.Controllers
             await _context.SaveChangesAsync();
 
             // Create ResourceBook entity with FK
-            var resourceBook = new ResourceBook
+            var resourceBook = new Book
             {
                 Author = dto.Author,
                 Pages = dto.Pages,
@@ -90,7 +90,7 @@ namespace WebApplication2.Controllers
                 ResourceId = resource.ResourceId
             };
 
-            _context.ResourceBooks.Add(resourceBook);
+            _context.Books.Add(resourceBook);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetResourceBook), new { id = resourceBook.Id }, resourceBook);

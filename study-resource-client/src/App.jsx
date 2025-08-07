@@ -1,58 +1,29 @@
-import React, { useState } from "react";
-import "./App.css";
+import * as React from 'react';
+import './App.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function App() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [ResourceBookData, setResourceBookData] = useState(null);
-  const [error, setError] = useState("");
+const App = () =>{
+/*function App() {*/
+  const [resourcebooks, setResourceBooks] = useState([]);
 
-  const handleInputChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setResourceBookData(null);
-    setError("");
-
-    try {
-      const response = await fetch(`https://localhost:7292/api/ResourceBooks?author=${encodeURIComponent(searchQuery)}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setResourceBookData(data);
-    } catch (err) {
-      setError("Resource Book's author not found or server error.");
-      console.error(err);
-    }
-  };
+  useEffect(() => {
+    axios.get('https://localhost:7292/api/Books') // Adjust port as needed
+      .then(response => setResourceBooks(response.data))
+      .catch(error => console.error(error));
+  }, []);
 
   return (
-    <div className="app-container">
-      <form onSubmit={handleSearch} className="search-form">
-        <h1>Search Resource Book's Author</h1>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleInputChange}
-          placeholder="Enter an author's first and last name (e.g., Sebastian Raschka and Vahid Mirjalili)"
-          className="search-input"
-          required
-        />
-        <button type="submit" className="search-button">Search</button>
-      </form>
-
-      {ResourceBookData && (
-        <div className="result-box">
-          <h2>Author Found:</h2>
-          <p><strong>Author:</strong> {ResourceBookData.author}</p>
-        </div>
-      )}
-
-      {error && <p className="error-text">{error}</p>}
+    <div class='container'>
+      <span className='ResourceBookListHeader'>Resource Books List</span>
+      <p className='ResourceBookListInfo'>This file is in the<strong> study-resource-client </strong>folder and uses the <strong>WebApplication2</strong> .NET Core Web API</p>
+      <p className='ResourceBookList'>
+      <ul className="wideList">
+        {resourcebooks.map(resourcebook => (
+          <li key={resourcebook.id}>{resourcebook.author}</li>
+        ))}
+      </ul>
+      </p>
     </div>
   );
 }
